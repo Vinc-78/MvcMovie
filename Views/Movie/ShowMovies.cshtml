@@ -1,0 +1,98 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using Microsoft.AspNetCore.Html
+@using MvcMovie.Models
+
+@{
+    ViewBag.Title = "Tabella con i film disponibili";
+    ViewBag.TitoloPagina = "Il mio Movie Store";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    string[] TableHeaders = new string[] { "Poster","MovieID", "Titolo", "Genere", "Prezzo" };
+}
+
+
+
+
+@{
+  Func<dynamic, IHtmlContent> StampaTitoloString (string mTitolo) =>
+    @<h1>@mTitolo
+    </h1>;
+}
+
+@StampaTitoloString("Titolo da funzione")(null)
+
+
+@{
+    
+
+        Func<dynamic, IHtmlContent> StampaTabella(Movie mMovie) =>
+        @<tr>
+            <td class="image"><img class="post-list-image" src="@mMovie.Photo"></td>
+            <td>@Convert.ToString(mMovie.Id)</td>
+            <td>@Convert.ToString(mMovie.Title)</td>
+            <td>@Convert.ToString(mMovie.Genre)</td>
+            <td>@Convert.ToString(mMovie.Price)</td>
+        </tr>
+        ;
+    
+}
+
+
+
+<h2>Lista Movies del giorno alle ore : @DateTime.Now.ToShortTimeString() </h2>
+
+<div class="table">
+    <table class="table table-bordered tale-hover">
+
+         <thead>
+            <tr>
+                @{
+                    foreach (var head in TableHeaders)
+                    {
+                        <th>
+                            @head
+                        </th>
+                    }
+                }
+            </tr>
+        </thead>
+        <tbody>
+      @{
+        string Titolo, MovieID, Genere, Prezzo, Foto;
+        if (Model != null)
+        {
+          foreach (var data in Model)
+          {
+               @StampaTabella((MvcMovie.Models.Movie)data)(null)
+
+            /*
+            MovieID = Convert.ToString(((MvcMovie.Models.Movie)data).Id);
+            Titolo = ((MvcMovie.Models.Movie)data).Title;
+            Genere = ((MvcMovie.Models.Movie)data).Genre;
+            Prezzo = Convert.ToString(((MvcMovie.Models.Movie)data).Price);
+            Foto = Convert.ToString(((MvcMovie.Models.Movie)data).Photo);
+
+            <tr>
+              <td class=“image”><img class="post-list-image" src="@Foto"></td>
+              <td>@MovieID</td>
+              <td>@Titolo</td>
+              <td>@Genere</td>
+              <td>@Prezzo</td>
+            </tr>
+
+            */
+          }
+        }
+      }
+    </tbody>
+
+
+
+
+
+
+    </table>
+
+</div>
