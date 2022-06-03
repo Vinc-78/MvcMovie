@@ -21,6 +21,7 @@ namespace MvcMovie.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Il campo Nome è obbligatorio")]
+        [MiaValidazione.DueParole]
         public string FullName { get; set; }
         public string Gender { get; set; }
 
