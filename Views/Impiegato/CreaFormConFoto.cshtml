@@ -7,7 +7,7 @@
     
 }
 
-@model MvcMovie.Models.Impiegato
+@model MvcMovie.Models.ImpiegatoConFile
 
 @using (Html.BeginForm("CreaSchedaConFoto", "Impiegato", FormMethod.Post, new { enctype ="multipart/form-data"}))
 {
@@ -45,7 +45,7 @@
              <tr>
                 <td>Photo: </td>
                 <td>
-                    @Html.TextBoxFor(m => m.Photo, new { type = "file"})
+                    @Html.TextBoxFor(m => m.File, new { type = "file"})
                 </td>
             </tr>
             
