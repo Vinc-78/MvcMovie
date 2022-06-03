@@ -22,6 +22,8 @@ namespace MvcMovie.Controllers
             return View(TempImpiegato);
         }
 
+
+        [HttpGet]
         public IActionResult CreaFormConFoto()
         {
             ImpiegatoConFile TempImpiegato = new ImpiegatoConFile()
@@ -59,8 +61,19 @@ namespace MvcMovie.Controllers
             return View(VeroImpiegato);
         }
 
+
+        [HttpPost] // impone che i dati siano passati da un form POST
+        [ValidateAntiForgeryToken] // crea un token che crea un collegamento tra form e scheda
         public IActionResult CreaSchedaConFoto(ImpiegatoConFile DatiImpiegato)
         {
+
+            //se il modello non è valido mi ritorna indietro alla view
+            if (!ModelState.IsValid)
+            {
+                return View("CreaFormConFoto", DatiImpiegato);
+            }
+            
+            
             //Da qui estraggo il file e me lo salvo su file system.
             //Agendo su Request
             
@@ -69,6 +82,9 @@ namespace MvcMovie.Controllers
             // qui creo la cartella se non esiste
             if(!Directory.Exists(path))
                 Directory.CreateDirectory(path);
+
+            //faccio un istanza a FileInfo per prendere le informazioni
+            //del file e gli passo il file dal form
 
             FileInfo fileInfo = new FileInfo(DatiImpiegato.File.FileName);
 

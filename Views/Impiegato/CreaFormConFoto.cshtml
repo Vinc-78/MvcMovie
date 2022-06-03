@@ -2,15 +2,19 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-     ViewData["Title"] = "Home Page";
-     ViewBag.TitoloPagina = "Buongiorno a tutti";
+    ViewData["Title"] = "Home Page";
+    ViewBag.TitoloPagina = "Buongiorno a tutti";
+
+    // Specify validation requirements for different fields.
     
+
 }
 
 @model MvcMovie.Models.ImpiegatoConFile
 
 @using (Html.BeginForm("CreaSchedaConFoto", "Impiegato", FormMethod.Post, new { enctype ="multipart/form-data"}))
 {
+        @Html.ValidationSummary()
         <table cellpadding="0" cellspacing="0" class="center">
             <tr>
                 <th colspan="2" align="center">Person Details</th>
@@ -25,6 +29,7 @@
                 <td>Name: </td>
                 <td>
                     @Html.TextBoxFor(m => m.FullName)
+                    @Html.ValidationMessage("FullName")
                 </td>
             </tr>
             <tr>
@@ -39,6 +44,7 @@
                 <td>City: </td>
                 <td>
                     @Html.TextBoxFor(m => m.City)
+                    @Html.ValidationMessage("City")
                 </td>
             </tr>
 
