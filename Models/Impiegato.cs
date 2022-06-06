@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+
 namespace MvcMovie.Models
 {
     public class Impiegato
@@ -35,4 +36,11 @@ namespace MvcMovie.Models
 
         public IFormFile File { get; set; }
     }
+
+    public class EsitoPerazionePut
+    { 
+     public string Esito { get; set; }
+    }
+
+
 }

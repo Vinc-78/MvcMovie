@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MvcMovie.Models;
+using System.Net;
 
 namespace MvcMovie.Controllers
 {
@@ -116,5 +117,54 @@ namespace MvcMovie.Controllers
             };
             return View(VeroImpiegato);
         }
+
+
+        public IActionResult CreaFormPut() 
+        {
+
+            //Recuperiamo i dati sul dirigente
+            //Facciamo una preparazione della richiesta put al server
+
+            var request = (HttpWebRequest)WebRequest.Create("https://localhost:7095/Impiegato/InserisciDirigente");
+            var postData = "NomeDir=" + Uri.EscapeDataString("Mario");
+            postData += "&CognomeDir=" + Uri.EscapeDataString("Rossi");
+            var data = System.Text.Encoding.ASCII.GetBytes(postData);
+
+            request.Method = "PUT";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = data.Length;
+
+            //Invio dei dati al server
+            using (var stream = request.GetRequestStream())
+            {
+                stream.Write(data, 0, data.Length);
+            }
+
+            //Prendiamo la risposta
+            var response = (HttpWebResponse)request.GetResponse();
+            var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+
+            //Processiamo la risposta del server
+            //e creiamo la view conseguentemente.
+
+            EsitoPerazionePut Esito = new EsitoPerazionePut();
+
+            Esito.Esito = responseString;
+
+            return View(Esito);
+        }
+
+        [HttpPut]
+        public string InserisciDirigente()
+        {
+            string metod = Request.Method;        
+
+            if (metod == "PUT")
+                return "Dirigente inserito correttamente ";
+            else
+                return "Errore inserimentodirigente";
+        }
+
+
     }
 }
