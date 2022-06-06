@@ -1,3 +1,7 @@
+using MvcMovie;
+EserciziLinq.Esercizio2_linq0();
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
